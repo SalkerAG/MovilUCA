@@ -1,6 +1,6 @@
 <?php
 	error_reporting(E_ALL ^ E_DEPRECATED);
-	class Moviles extends CI_Controller{
+	class Novedades extends CI_Controller{
 	//constructor del controlador articulos
 	public function __construct(){
 		 parent::__construct();
@@ -16,18 +16,11 @@
 
 				$this->load->view('catalogo_view',$datos);
 		}else{ 
-		 $datos = array('titulo_web' => 'Moviles',
+		 $datos = array('titulo_web' => 'Top Novedades',
 		 'moviles' => $this->moviles_model->get_moviles(),
-		 'valorados' =>  $this->moviles_model->get_movil_valor(),
-		 'novedad' =>  $this->moviles_model->get_movil_novedad(),
-		 'preciov' =>  $this->moviles_model->get_precio_venta(),
-		 'preciop' =>  $this->moviles_model->get_precio_valor(),
-		 'noticias' =>  $this->moviles_model->get_noticias()
+		 'novedades' =>  $this->moviles_model->get_movil_novedad()
 		 );
-	 	$this->load->view('moviles_view', $datos);
+	 	$this->load->view('novedades_view', $datos);
 	 }
-	}
-	public function contacto(){
-		$this->load->view('contacto_view');
 	}
 }?>

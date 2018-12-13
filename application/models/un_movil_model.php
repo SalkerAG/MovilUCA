@@ -12,7 +12,7 @@ class un_movil_model extends CI_Model{
 		return $consulta->result();
 	}
 	public function get_comentario($id){
-		$consulta = $this->db->query('Select * from comentario,usuario where comentario.id_movil = '.$id.' and comentario.id_usuario = usuario.id');
+		$consulta = $this->db->query('Select * from comentario,usuario where comentario.id_movil = '.$id.' and comentario.id_usuario = usuario.id order by fecha desc');
 		return $consulta->result();
 	}
 	public function get_puntuacionr($id){
@@ -43,7 +43,19 @@ class un_movil_model extends CI_Model{
 		$this->db->join('prestaciones', 'prestaciones.id_movil = movil.id');
 		$this->db->group_by('prestaciones.id_movil');
 		$query = $this->db->get();
-		return $query->result();
+		$num = $query->num_rows();
+	 	if($num <= 2){
+	 		$this->db->select('movil.id, movil.marca, movil.modelo,  movil.foto, prestaciones.procesador, prestaciones.ram, prestaciones.memoria')
+			->from('movil');
+			$this->db->join('prestaciones', 'prestaciones.id_movil = movil.id');
+			$this->db->group_by('prestaciones.id_movil');
+		
+			$query = $this->db->get();
+			return $query->result();
+	 	}else{
+	 		
+	 		return $query->result();
+	 	}
 	}
  //añade un comentario
  public function add_comment(){
@@ -62,37 +74,67 @@ class un_movil_model extends CI_Model{
 	}
  }
  public function add_punt(){
- 	$consulta = $this->db->query("SELECT id FROM usuario WHERE usuario='{$_SESSION['usuario']}'");
- 	$idu = $consulta->result();
- 	$idm = $this->input->post('id_movil');
-	$r = get_object_vars($idu[0])['id'];
- 	$consulta = $this->db->query('Select id_usuario from reseña where id_usuario = '.$r.' and id_movil = '.$idm.'');
- 	$num = $consulta->num_rows();
- 	if($num >= 1){
- 		echo "<script>alert('Ya has dado tu opinión sobre este terminal.');</script>";
- 	}
- 	else {
-	 $this->db->insert('reseña', array(
-		 'id_movil'=>$this->input->post('id_movil',TRUE),
-		 'id_usuario'=>$r,
-		 'rendimiento'=>$this->input->post('rend',TRUE),
-		 'bateria'=>$this->input->post('bat',TRUE),
-		 'diseño'=>$this->input->post('dis',TRUE),
-		 'pantalla'=>$this->input->post('pant',TRUE)
-		 ));
-	 $this->db->set('num_reseñas', 'num_reseñas+1', FALSE);
-	 $this->db->where('id',$this->input->post('id_movil',TRUE) );
-	 $this->db->update('movil');
-	 }
+ 	if (isset($_SESSION["usuario"])) {
+	 	$consulta = $this->db->query("SELECT id FROM usuario WHERE usuario='{$_SESSION['usuario']}'");
+	 	$idu = $consulta->result();
+	 	$idm = $this->input->post('id_movil');
+		$r = get_object_vars($idu[0])['id'];
+	 	$consulta = $this->db->query('Select id_usuario from reseña where id_usuario = '.$r.' and id_movil = '.$idm.'');
+	 	$num = $consulta->num_rows();
+	 	if($num >= 1){
+	 		echo "<script>alert('Ya has dado tu opinión sobre este terminal.');</script>";
+	 	}
+	 	else {
+		 $this->db->insert('reseña', array(
+			 'id_movil'=>$this->input->post('id_movil',TRUE),
+			 'id_usuario'=>$r,
+			 'rendimiento'=>$this->input->post('rend',TRUE),
+			 'bateria'=>$this->input->post('bat',TRUE),
+			 'diseño'=>$this->input->post('dis',TRUE),
+			 'pantalla'=>$this->input->post('pant',TRUE)
+			 ));
+		 $this->db->set('num_reseñas', 'num_reseñas+1', FALSE);
+		 $this->db->where('id',$this->input->post('id_movil',TRUE) );
+		 $this->db->update('movil');
+		 }
+		}else{
+			echo "<script>alert('Para poder puntuar debes de iniciar sesion.');</script>";
+	 	}
  }
  public function add_fav(){
  	$consulta = $this->db->query("SELECT id FROM usuario WHERE usuario='{$_SESSION['usuario']}'");
  		$idu = $consulta->result();
  		$r = get_object_vars($idu[0])['id'];
+
  		$this->db->insert('favoritos', array(
 			'id_movil'=>$this->input->post('id_movil',TRUE),
 			'id_usuario' => $r
 			));
- 		echo "<script>alert('Añadido a favoritos.');</script>";
+ 		
+ }
+
+ public function el_fav(){
+ 	$consulta = $this->db->query("SELECT id FROM usuario WHERE usuario='{$_SESSION['usuario']}'");
+ 		$idu = $consulta->result();
+ 		$r = get_object_vars($idu[0])['id'];
+ 		$this->db->delete('favoritos', array(
+			'id_movil'=>$this->input->post('id_movil',TRUE),
+			'id_usuario' => $r
+			));
+ 		
+ }
+
+ public function already_fav($id){
+ 	if (isset($_SESSION["usuario"])) {
+	  	$consulta = $this->db->query("SELECT id FROM usuario WHERE usuario='{$_SESSION['usuario']}'");
+	 	$idu = $consulta->result();
+	 	$idm = $this->input->post('id_movil');
+	 	$r = get_object_vars($idu[0])['id'];
+	 	$consulta = $this->db->query('SELECT id_usuario FROM favoritos WHERE id_usuario='.$r.' AND id_movil = '.$id.'');
+	 	if($consulta->num_rows() > 0)
+	 		return 0;
+	 	else
+	 		return 1;
+	 }
  }
 }

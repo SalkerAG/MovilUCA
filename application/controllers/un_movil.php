@@ -1,4 +1,5 @@
 <?php
+
 error_reporting(E_ALL ^ E_DEPRECATED);
 class Un_movil extends CI_Controller {
 	public function __construct(){
@@ -17,15 +18,21 @@ class Un_movil extends CI_Controller {
 			'puntuacionb'=> $this->un_movil_model->get_puntuacionb($id),
 			'puntuaciond'=> $this->un_movil_model->get_puntuaciond($id),
 			'puntuacionp'=> $this->un_movil_model->get_puntuacionp($id),
-			'sim' => $p
+			'sim' => $p,
+			'already_fav' => $this->un_movil_model->already_fav($id)
 	 		);
 
 		$this->load->view('un_movil_view',$datos);
  	}
 
  	public function add_fav(){
+
  		if($this->input->post('favorito')){
  			$this->un_movil_model->add_fav();
+ 			$this->mov($this->input->post('id_movil',TRUE));
+ 		}
+ 		if($this->input->post('elfavorito')){
+ 			$this->un_movil_model->el_fav();
  			$this->mov($this->input->post('id_movil',TRUE));
  		}
  	}

@@ -45,7 +45,7 @@
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
 				          <a class="dropdown-item" href="<?= base_url().'logout'?>">Logout</a>
 				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="#">Favoritos</a>
+				          <a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
 				        </div>
 				      </li>
 		        	
@@ -133,12 +133,22 @@
 		</div>
 
 	 <div class="row col-sm-10">
-	 	<?php $i= 0;?>
-			<?php foreach($moviles as $movil):?>
+		<?php 
+		 	$nb_elem_per_page = 5;
+			$page = isset($_GET['page'])?intval($_GET['page']-1):0;
+			$data = $moviles;
+			if(is_int((count($data)/$nb_elem_per_page))){
+				$number_of_pages = intval(count($data)/$nb_elem_per_page);
+			} else {
+				$number_of_pages = intval(count($data)/$nb_elem_per_page)+1;
+			}
+		?>
+
+			<?php foreach(array_slice($moviles, $page*$nb_elem_per_page,$nb_elem_per_page) as $movil){?>
 				
 				<figure class="snip1249 rounded ">
 				<?php
-	 				if($movil->disponibilidad == 0){?>
+	 			if($movil->disponibilidad == 0){?>
 					<span class="tag rounded-right">No disponible</span>
 				<?php } ?>
 				  <div class="image" style="background-color:#F3F3F3;">
@@ -155,11 +165,17 @@
 					    <div style="margin-top: -20px;"><a href="<?= base_url().'un_movil/mov/'.$movil->id?> " class="add-to-cart rounded">Ver móvil</a></div><br>
 					  </figcaption>
 					</figure>
-					<?php  endforeach; ?>
+					<?php } ?>
+				</div>   
+			<?php if (count($data) > $nb_elem_per_page) { ?>   
+			<ul id='paginator'>
+ 			<?php
+  				for($i=1;$i<=$number_of_pages;$i++){ ?>
+  					 <li><a href='?page=<?=$i?>'><?php echo $i ?></a></li>
+  				<?php } ?>
+			</ul>
+			<?php } ?>	
 
-
-		
-	</div>
 </div>
 	
 </body>

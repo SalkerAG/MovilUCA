@@ -19,7 +19,7 @@ class Usuarios extends CI_Controller {
 	//trim = limpia los espacios en blanco
 	//callback_ = para llamar un método
 	$this->form_validation->set_rules('nombre','Nombre', 'required');
-	$this->form_validation->set_rules('correo','Correo','equired|valid_email|trim');
+	
 	$this->form_validation->set_rules('usuario','Usuario','required|trim|callback_verify_user');
 	$this->form_validation->set_rules('pass','Contraseña','required|trim');
 	$this->form_validation->set_rules('pass2','Confirmación de contraseña','required|trim|matches[pass]');

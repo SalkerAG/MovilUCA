@@ -11,12 +11,17 @@ class moviles_model extends CI_Model{
 		$consulta = $this->db->query('Select (sum((reseña.rendimiento + reseña.bateria + reseña.diseño + reseña.pantalla)/4)/movil.num_reseñas) as total, movil.marca, movil.modelo, movil.disponibilidad, movil.foto, movil.id from movil, reseña where movil.id = reseña.id_movil group by reseña.id_movil order by (sum(reseña.rendimiento + reseña.bateria + reseña.diseño + reseña.pantalla)/movil.num_reseñas) DESC;');
 		return $consulta->result();
 	}
- public function get_movil_venta(){
-		$consulta = $this->db->query('Select * from movil;');
+ public function get_noticias(){
+ 	$consulta = $this->db->query('Select * from noticia;');
+		return $consulta->result();
+ }
+ public function get_movil_novedad(){
+		$consulta = $this->db->query('Select * from movil order by fecha_lanzamiento desc;');
 		return $consulta->result();
 	}
  public function get_precio_venta(){
-		$consulta = $this->db->query('Select precio from precio,movil where movil.id=1 and precio.id_movil = movil.id group by precio.id asc limit 1;');//Cambiar esta consulta por el mejor vendido
+		$consulta = $this->db->query('Select precio from precio,movil where precio.id_movil = movil.id  order by 
+			fecha_lanzamiento desc;');//Cambiar esta consulta por el mejor vendido
 		return $consulta->result();
  }
 

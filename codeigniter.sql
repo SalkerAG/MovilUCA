@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 01, 2018 at 06:06 PM
+-- Generation Time: Dec 12, 2018 at 04:40 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `comentario` (
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_usuario` int(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Dumping data for table `comentario`
@@ -48,6 +48,8 @@ INSERT INTO `comentario` (`id`, `id_movil`, `com`, `fecha`, `id_usuario`) VALUES
 (3, 2, 's', '2018-11-25 13:59:28', 1),
 (4, 2, 's', '2018-11-25 14:00:15', 2),
 (5, 1, '2', '2018-11-25 14:02:20', 1),
+(41, 1, 'Hola que tal esto es un a prueba', '2018-12-12 16:19:27', 2),
+(39, 2, 's', '2018-12-01 19:08:52', 1),
 (38, 6, 'Prueba 1 2 3', '2018-12-01 18:18:20', 1);
 
 -- --------------------------------------------------------
@@ -62,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `favoritos` (
   `id_usuario` int(32) NOT NULL,
   `id_movil` int(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Dumping data for table `favoritos`
@@ -72,7 +74,8 @@ INSERT INTO `favoritos` (`id`, `id_usuario`, `id_movil`) VALUES
 (1, 2, 4),
 (2, 2, 5),
 (3, 2, 7),
-(4, 2, 3);
+(4, 2, 3),
+(14, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -110,6 +113,28 @@ INSERT INTO `movil` (`id`, `marca`, `modelo`, `fecha_lanzamiento`, `disponibilid
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `noticia`
+--
+
+DROP TABLE IF EXISTS `noticia`;
+CREATE TABLE IF NOT EXISTS `noticia` (
+  `foto` varchar(128) COLLATE utf8_spanish_ci NOT NULL,
+  `descrip` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `url` varchar(256) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `noticia`
+--
+
+INSERT INTO `noticia` (`foto`, `descrip`, `url`) VALUES
+('noticia2.jpg', '5 móviles por menos de 150 euros que merecen la pena para Navidad', 'https://elandroidelibre.elespanol.com/2018/12/5-moviles-por-menos-de-150-euros-merecen-la-pena-navidad.html'),
+('noticia1.jpg', 'Consejos para alargar la vida útil de los móviles', 'https://www.europapress.es/portaltic/gadgets/noticia-consejos-alargar-vida-util-moviles-20181209112932.html'),
+('noticia3.jpg', 'Huawei domina las redes y los móviles españoles', 'https://elpais.com/internacional/2018/12/09/actualidad/1544372596_492738.html');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `precio`
 --
 
@@ -120,6 +145,7 @@ CREATE TABLE IF NOT EXISTS `precio` (
   `id_tienda` int(32) NOT NULL,
   `precio` double NOT NULL,
   `tienda` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `url` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_movil` (`id_movil`),
   KEY `id_tienda` (`id_tienda`)
@@ -129,22 +155,22 @@ CREATE TABLE IF NOT EXISTS `precio` (
 -- Dumping data for table `precio`
 --
 
-INSERT INTO `precio` (`id`, `id_movil`, `id_tienda`, `precio`, `tienda`) VALUES
-(1, 1, 1, 695, 'Media Mark'),
-(2, 2, 1, 1025.99, 'Media Mark'),
-(3, 1, 1, 780, 'Amazon'),
-(4, 3, 1, 259, 'Amazon'),
-(5, 4, 1, 206.64, 'Amazon'),
-(6, 4, 1, 305.99, 'Media Mark'),
-(7, 5, 1, 248.99, 'Amazon'),
-(8, 5, 1, 250.95, 'Media Mark'),
-(9, 2, 1, 1049, 'Amazon'),
-(10, 6, 1, 229.96, 'Amazon'),
-(11, 6, 1, 250, 'Media Mark'),
-(12, 7, 1, 214.99, 'Amazon'),
-(13, 7, 1, 229.95, 'Media Mark'),
-(14, 8, 1, 305.99, 'Amazon'),
-(15, 9, 1, 249.95, 'Media Mark');
+INSERT INTO `precio` (`id`, `id_movil`, `id_tienda`, `precio`, `tienda`, `url`) VALUES
+(1, 1, 1, 299.99, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-bq-aquaris-x-pro-5-2-full-hd-snapdragon-626-4-gb-ram-64-gb-4g-12-mp-1363809.html'),
+(2, 2, 1, 929, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-iphone-x-64-gb-super-retina-de-5-8-12-mpx-red-4g-lte-gris-espacial-1382453.html'),
+(3, 1, 1, 280.45, 'Amazon', 'https://www.amazon.es/Aquaris-Dual-SIM-64GB-Black/dp/B0745ZRXMN/ref=sr_1_5?s=electronics&ie=UTF8&qid=1544628139&sr=1-5&keywords=bq+aquiaris+x'),
+(4, 3, 1, 207.33, 'Amazon', 'https://www.amazon.es/Samsung-Galaxy-Edge-Smartphone-Quad-Core/dp/B00TX5PCX8/ref=sr_1_2?s=electronics&ie=UTF8&qid=1544628407&sr=1-2&keywords=samsung+galaxy+s6+edge'),
+(5, 4, 1, 209.95, 'Amazon', 'https://www.amazon.es/Xiaomi-MI-A2-Smartphone-importada/dp/B07FMPVBQR/ref=sr_1_1?s=electronics&ie=UTF8&qid=1544628455&sr=1-1&keywords=xiaomi+mi+a2'),
+(6, 4, 1, 258, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-xiaomi-mi-a2-5-99-octa-core-4-gb-ram-64-gb-dorado-1427298.html'),
+(7, 5, 1, 259, 'Amazon', 'https://www.amazon.es/Huawei-P20-Lite-Memoria-Pantalla/dp/B07BHDC9V6/ref=sr_1_1?s=electronics&ie=UTF8&qid=1544628520&sr=1-1&keywords=huawei+p20+lite'),
+(8, 5, 1, 279, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-huawei-p20-lite-fullview-5-84-full-hd-kirin-659-4-gb-ram-64-gb-dual-c%C3%A1mara-azul-1401774.html'),
+(9, 2, 1, 856.32, 'Amazon', 'https://www.amazon.es/Apple-iPhone-%C3%BAnica-256GB-Plata/dp/B075R9SDZ9/ref=sr_1_2_sspa?s=electronics&ie=UTF8&qid=1544628308&sr=1-2-spons&keywords=iphone%2Bx&th=1'),
+(10, 6, 1, 339, 'Amazon', 'https://www.amazon.es/Honor-10-Smartphone-pantalla-desbloqueo/dp/B07CXHZ2KH/ref=sr_1_1?s=electronics&ie=UTF8&qid=1544628577&sr=1-1&keywords=honor+10'),
+(11, 6, 1, 399, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-honor-10-5-84-128-gb-rom-4-gb-ram-24-mp-16-mp-dual-ia-azul-1418694.html'),
+(12, 7, 1, 171.99, 'Amazon', 'https://www.amazon.es/Samsung-Galaxy-J6-Smartphone-bluetooth/dp/B07DXNX7X4/ref=sr_1_5?s=electronics&ie=UTF8&qid=1544628666&sr=1-5&keywords=samsung+galaxy+j6'),
+(13, 7, 1, 219, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-samsung-galaxy-j6-6-true-hd-infinity-3-gb-ram-32-gb-dual-c%C3%A1mara-13-5-mp-negro-1433250.html'),
+(14, 8, 1, 172, 'Amazon', 'https://www.amazon.es/Xiaomi-Mi-A1-Smartphone-Snapdragon/dp/B077Y4NVNW/ref=sr_1_5?s=electronics&ie=UTF8&qid=1544628716&sr=1-5&keywords=xiaomi+mi+a1'),
+(15, 9, 1, 269, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-motorola-one-5-9-hd-android-one-8-x-2-0ghz-4-gb-ram-64-gb-13-8-mp-negro-1434013.html');
 
 -- --------------------------------------------------------
 

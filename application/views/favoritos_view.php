@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Contacto</title>
+<title><?= $titulo_web ?></title>
  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,12 +11,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-	<link rel="stylesheet" href="<?php echo base_url('css/contacto.css')?>">
+	<link rel="stylesheet" href="<?php echo base_url('css/catalogo.css')?>">
 	<style>
 	body{
 		background-color: #e9ecef;
 	}
-
 	</style>
 </head>
 <body>
@@ -35,6 +34,9 @@
 	      <li class="nav-item active">
 	        <a class="nav-link" href="<?= base_url().'catalogo'?>"><i class="fas fa-table fa-sm pr-2"></i>Catálogo</a>
 	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="<?= base_url().'moviles/contacto'?>"><i class="far fa-envelope fa-sm pr-2"></i>Contacto</a>
+	      </li>
 	     
 	    </ul>
 	    <form class="form-inline mx-5 pr-3 my-lg-0" action="<?= base_url().'moviles'?>" method="post">
@@ -42,52 +44,72 @@
 	      <button class="btn btn btn-outline-light my-2 my-sm-0" value="buscar" type="submit" name="submit_m">Buscar </button>
 	    </form>
 	   <ul class="navbar-nav mr-5"> 
-	    	<?php
-	    		if (isset($_SESSION["usuario"])) {?>
 	    			<li class="nav-item dropdown active">
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				         <i class="far fa-user-circle fa-lg" style="padding-right: 10px;"></i><?=$_SESSION["usuario"]?>
 				        </a>
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
 				          <a class="dropdown-item" href="<?= base_url().'logout'?>">Logout</a>
-				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
 				        </div>
 				      </li>
-		        	
-	        	
-	        	<?php }else{ ?>
-	        		<li class="nav-item active">
-			         <a class="nav-link" href="<?= base_url().'usuarios'?>">Login<i class="fas fa-sign-in-alt fa-sm pl-2"></i></a>
-			         <li class="nav-item active">
-			        <a class="nav-link" href="<?= base_url().'usuarios/registro'?>">Registro&nbsp <i class="fas fa-user-plus"></i></a>
-			      </li>
-			      </li>
-	        	<?php }
-	       	?>
-	      
 	  </ul>
 	  </div>
 </nav>
+<center><h1 style="padding-top: 70px; margin-bottom: -20px;"> Tus moviles favoritos</h1></center>
+<?php foreach($moviles as $movil):?>
+<div class="container-fluid pt-5">
+	<div class="row" style="margin-bottom: 30px;">
 
+			<div class="col-sm-5 " style="padding-top: 50px;">
+				<img src="<?php echo base_url('images/'.$movil->foto.'')?>" class="img-responsive" alt="Responsive image"height="auto" width="225px" align="left">
+				<h1><?= $movil->marca;?> <?= $movil->modelo;?></h1>
+				 <div><a href="<?= base_url().'un_movil/mov/'.$movil->id?> " class="btn btn-outline-dark">Ver móvil</a></div>
+			</div>
+			<div class="col-sm-3">
+		 		<table class="table table-sm " style="width: 400px; margin-left: 100px; margin-top: 40px;">
+				 
+				  <tbody>
+			    <tr>
+			      <th scope="row" style="background-color: #e9ecef;">Procesador</th>
+			      <td><?= $movil->procesador;?> <?= $movil->velocidad;?></td>
+			    </tr>
+			        <tr>
+			      <th scope="row" style="background-color: #e9ecef;">Memoria RAM</th>
+			      <td><?= $movil->ram;?></td>
+			    </tr>
+			        <tr>
+			      <th scope="row" style="background-color: #e9ecef;">Memoria</th>
+			      <td><?= $movil->memoria;?>Gb</td>
+			    </tr>
+			        <tr>
+			      <th scope="row" style="background-color: #e9ecef;">Camara</th>
+			      <td><?= $movil->camara;?></td>
+			    </tr>
+			    <tr>
+			      <th scope="row" style="background-color: #e9ecef;">Pantalla</th>
+			      <td><?= $movil->pantalla;?></td>
+			    </tr>
+			    <tr>
+			      <th scope="row" style="background-color: #e9ecef;">Version</th>
+			      <td><?= $movil->version;?></td>
+			    </tr>
+				  </tbody>
+				</table>
+			</div>
 
-<div class="cont">
-	<form action="<?php echo
-			base_url()?>contacto/enviar_m">
-	  <h1>¡Ponte en contacto!</h1>
-		<p>Envianos cualquier duda o sugerencia.</p>
-		<center><div id="logo" class="far fa-envelope-open"></div></center>
-		  <input name="name" type="text"
-		placeholder="Nombre" id="name" required/>
-		  
-		  <input name="email" type="email"
-		placeholder="Email" id="email" required/>
-		  
-		  <textarea name="text" placeholder="Mensaje"></textarea>
-		   <center><button class="btn btn-outline-light" type="submit" name="sumbit" value="Enviar" style="background-color: #494949; margin-top: 10px;">Enviar</button></center>
-		</form>
+			<hr>
+			<hr>
+			<div class="col-sm-2">
+				<?= form_open(base_url().'favoritos/el_fav',
+									array('name'=>'fav'));?>
+				<button class="btn btn btn-outline-danger my-2 my-sm-0" value="buscar" type="submit" name="elfavorito" style="margin-top: 50px;">Eliminar de Favoritos </button>
+				<input type="hidden" name="id_movil" value="<?= $movil->id;?>">
+				<?= form_close(); ?>
+			</div>
+		</div>
 
-
-</div>
+		<hr>
+		 <?php endforeach; ?>
+		</div>
 </body>
 </html>

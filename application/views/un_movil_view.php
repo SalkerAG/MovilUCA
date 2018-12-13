@@ -19,7 +19,6 @@
 	</style>
 </head>
 <body>
-
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 	  <a class="navbar-brand" href="<?= base_url().'moviles/'?>">MovilUca</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +52,7 @@
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
 				          <a class="dropdown-item" href="<?= base_url().'logout'?>">Logout</a>
 				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="#">Favoritos</a>
+				          <a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
 				        </div>
 				      </li>
 		        	
@@ -74,13 +73,19 @@
 
 <div class="container-fluid pt-5">
 	
-			<div style="padding-left: 90%; padding-top: 2%;">
+			<div style="padding-left: 85%; padding-top: 2%;">
 				<?php if (isset($_SESSION["usuario"])) {?>
 				<?= form_open(base_url().'un_movil/add_fav',
 									array('name'=>'fav'));?>
 					<input type="hidden" name="id_movil" value="<?= $movil->id;?>">
 					<?php if (isset($_SESSION["usuario"])) {?><input type="hidden" name="id_usuario" value="<?=$_SESSION["usuario"]?>"><?php }?>
-					<button type="submit" value="Registrar" class="btn btn-success" name="favorito">Añadir a favoritos</button>
+					<?php if($already_fav == 0) { ?>
+						<button type="submit" value="Registrar" class="btn btn-outline-danger"name="elfavorito">Eliminar de Favoritos</button>
+					
+					<?php } else { ?>
+
+					<button type="submit" value="Registrar" class="btn btn-outline-success" name="favorito">Añadir a favoritos</button>
+					<?php } ?>
 				<?= form_close(); ?>
 					<?php } ?>
 			</div>
@@ -99,7 +104,7 @@
 			
 			<h1><?= $movil->marca;?> <?= $movil->modelo;?></h1>
 			<?php foreach($precio as $pmovil):?>
-				<h3><?= $pmovil->precio;?>€  -  <?= $pmovil->tienda;?></h3>
+				<h4><?= $pmovil->precio;?>€  -  <?= $pmovil->tienda;?> <a href ="<?= $pmovil->url; ?>"  target="_blank"><i class="fas fa-external-link-alt fa-xs" ></i></a></h4>
 			<?php endforeach; ?>
 			<h4> Fecha de lanzamiento: <?= $movil->fecha_lanzamiento;?></h4>
 
