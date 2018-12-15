@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Dec 12, 2018 at 04:40 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 15-12-2018 a las 20:12:14
+-- Versión del servidor: 5.7.23
+-- Versión de PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `codeigniter`
+-- Base de datos: `codeigniter`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comentario`
+-- Estructura de tabla para la tabla `comentario`
 --
 
 DROP TABLE IF EXISTS `comentario`;
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `comentario` (
 ) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `comentario`
+-- Volcado de datos para la tabla `comentario`
 --
 
 INSERT INTO `comentario` (`id`, `id_movil`, `com`, `fecha`, `id_usuario`) VALUES
@@ -55,7 +55,7 @@ INSERT INTO `comentario` (`id`, `id_movil`, `com`, `fecha`, `id_usuario`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `favoritos`
+-- Estructura de tabla para la tabla `favoritos`
 --
 
 DROP TABLE IF EXISTS `favoritos`;
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `favoritos` (
 ) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `favoritos`
+-- Volcado de datos para la tabla `favoritos`
 --
 
 INSERT INTO `favoritos` (`id`, `id_usuario`, `id_movil`) VALUES
@@ -80,7 +80,7 @@ INSERT INTO `favoritos` (`id`, `id_usuario`, `id_movil`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movil`
+-- Estructura de tabla para la tabla `movil`
 --
 
 DROP TABLE IF EXISTS `movil`;
@@ -93,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `movil` (
   `foto` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `num_reseñas` int(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `movil`
+-- Volcado de datos para la tabla `movil`
 --
 
 INSERT INTO `movil` (`id`, `marca`, `modelo`, `fecha_lanzamiento`, `disponibilidad`, `foto`, `num_reseñas`) VALUES
@@ -108,34 +108,48 @@ INSERT INTO `movil` (`id`, `marca`, `modelo`, `fecha_lanzamiento`, `disponibilid
 (6, 'Honor', '10', '2018-07-17', 1, 'Honor10.png', 3),
 (7, 'Samsung', 'Galaxy J6', '2018-07-09', 1, 'j6.png', 2),
 (8, 'Xiaomi', 'MI A1', '2018-03-07', 0, 'xiaomiA1.png', 5),
-(9, 'Motorola', 'One', '2018-09-18', 1, 'one.png', 2);
+(9, 'Motorola', 'One', '2018-09-18', 1, 'one.png', 2),
+(10, 'Xiaomi', 'Pocophone F1', '2018-11-13', 1, 'pocophone.png', 0),
+(11, 'Xiaomi', 'Mi8', '2018-08-14', 1, 'mi8.png', 1),
+(12, 'OnePlus', '6T', '2018-10-10', 1, 'OnePlus6t.png', 0),
+(13, 'Huawei', 'Honor 8x', '2018-09-20', 1, 'honor8x.png', 0),
+(14, 'Xiaomi', 'Note 6 Pro', '2018-09-10', 1, 'minote6.png', 0),
+(15, 'Huawei', 'Honor 10', '0000-00-00', 1, 'HHonor10.png', 0),
+(16, 'Xiaomi', 'Mi8 Lite', '2018-09-01', 1, 'mi8l.png', 0),
+(17, 'Xiaomi', 'Note 5', '2018-03-10', 1, 'note5.png', 0),
+(18, 'Xiaomi', 'Mi A2 Lite', '2018-07-10', 1, 'A2Lite.png', 0),
+(21, 'Xiaomi', 'Mi Mix 2s', '2018-03-21', 1, 'Mix2s.png', 0),
+(23, 'Xiaomi', 'Mi Max 3', '2018-07-22', 1, 'Max3.png', 0),
+(24, 'Xiaomi', 'Prueba', '2018-12-12', 0, 'A2.jpg', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `noticia`
+-- Estructura de tabla para la tabla `noticia`
 --
 
 DROP TABLE IF EXISTS `noticia`;
 CREATE TABLE IF NOT EXISTS `noticia` (
+  `id` int(64) NOT NULL AUTO_INCREMENT,
   `foto` varchar(128) COLLATE utf8_spanish_ci NOT NULL,
   `descrip` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `url` varchar(256) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `url` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `noticia`
+-- Volcado de datos para la tabla `noticia`
 --
 
-INSERT INTO `noticia` (`foto`, `descrip`, `url`) VALUES
-('noticia2.jpg', '5 móviles por menos de 150 euros que merecen la pena para Navidad', 'https://elandroidelibre.elespanol.com/2018/12/5-moviles-por-menos-de-150-euros-merecen-la-pena-navidad.html'),
-('noticia1.jpg', 'Consejos para alargar la vida útil de los móviles', 'https://www.europapress.es/portaltic/gadgets/noticia-consejos-alargar-vida-util-moviles-20181209112932.html'),
-('noticia3.jpg', 'Huawei domina las redes y los móviles españoles', 'https://elpais.com/internacional/2018/12/09/actualidad/1544372596_492738.html');
+INSERT INTO `noticia` (`id`, `foto`, `descrip`, `url`) VALUES
+(1, 'noticia2.jpg', '5 móviles por menos de 150 euros que merecen la pena para Navidad', 'https://elandroidelibre.elespanol.com/2018/12/5-moviles-por-menos-de-150-euros-merecen-la-pena-navidad.html'),
+(2, 'noticia1.jpg', 'Consejos para alargar la vida útil de los móviles', 'https://www.europapress.es/portaltic/gadgets/noticia-consejos-alargar-vida-util-moviles-20181209112932.html'),
+(3, 'noticia3.jpg', 'Huawei domina las redes y los móviles españoles', 'https://elpais.com/internacional/2018/12/09/actualidad/1544372596_492738.html');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `precio`
+-- Estructura de tabla para la tabla `precio`
 --
 
 DROP TABLE IF EXISTS `precio`;
@@ -149,10 +163,10 @@ CREATE TABLE IF NOT EXISTS `precio` (
   PRIMARY KEY (`id`),
   KEY `id_movil` (`id_movil`),
   KEY `id_tienda` (`id_tienda`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `precio`
+-- Volcado de datos para la tabla `precio`
 --
 
 INSERT INTO `precio` (`id`, `id_movil`, `id_tienda`, `precio`, `tienda`, `url`) VALUES
@@ -170,12 +184,27 @@ INSERT INTO `precio` (`id`, `id_movil`, `id_tienda`, `precio`, `tienda`, `url`) 
 (12, 7, 1, 171.99, 'Amazon', 'https://www.amazon.es/Samsung-Galaxy-J6-Smartphone-bluetooth/dp/B07DXNX7X4/ref=sr_1_5?s=electronics&ie=UTF8&qid=1544628666&sr=1-5&keywords=samsung+galaxy+j6'),
 (13, 7, 1, 219, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-samsung-galaxy-j6-6-true-hd-infinity-3-gb-ram-32-gb-dual-c%C3%A1mara-13-5-mp-negro-1433250.html'),
 (14, 8, 1, 172, 'Amazon', 'https://www.amazon.es/Xiaomi-Mi-A1-Smartphone-Snapdragon/dp/B077Y4NVNW/ref=sr_1_5?s=electronics&ie=UTF8&qid=1544628716&sr=1-5&keywords=xiaomi+mi+a1'),
-(15, 9, 1, 269, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-motorola-one-5-9-hd-android-one-8-x-2-0ghz-4-gb-ram-64-gb-13-8-mp-negro-1434013.html');
+(15, 9, 1, 269, 'Media Mark', 'https://www.mediamarkt.es/es/product/_m%C3%B3vil-motorola-one-5-9-hd-android-one-8-x-2-0ghz-4-gb-ram-64-gb-13-8-mp-negro-1434013.html'),
+(16, 10, 1, 311.7, 'Amazon', 'https://www.amazon.es/Xiaomi-Pocophone-Dual-SIM-Versión-importada/dp/B07GTD2XDF'),
+(17, 11, 1, 499.5, 'Amazon', 'https://www.amazon.es/Xiaomi-Dual-128GB-Azul-Free/dp/B07FT4P2CP'),
+(18, 12, 1, 549, 'PcComponentes', 'https://www.pccomponentes.com/oneplus-6t-6gb-128gb-mirror-black-libre?utm_campaign=afiliados&utm_source=effi-1395053310'),
+(19, 13, 1, 249, 'PcComponentes', 'https://www.pccomponentes.com/honor-8x-4-64gb-dual-sim-azul-libre?utm_campaign=afiliados&utm_source=effi-1395053310'),
+(20, 14, 1, 185, 'Tienda Xiaomi', 'https://www.tienda-xiaomi.com/xiaomi-redmi-note-6-pro-3-32gb-negro-global/?utm_campaign=kimovil_affiliated_traffic&utm_medium=referral&utm_source=kimovil.com&utm_content=xiaomi-redmi-note-6-pro'),
+(21, 15, 1, 339, 'Amazon', 'https://www.amazon.es/Honor-10-Smartphone-pantalla-desbloqueo/dp/B07CXHZ2KH'),
+(22, 16, 1, 241, 'Amazon', 'https://www.amazon.es/Xiaomi-Lite-6-26-Doble-Negro/dp/B07JMPGNHK/ref=olp_product_details?_encoding=UTF8&me='),
+(23, 17, 1, 182, 'Tienda Xiaomi', 'https://es.aliexpress.com/item/Versi-n-Espa-ola-Smartphone-Xiaomi-Redmi-Note-5-Memoria-interna-de-32-GB-RAM/32874360191.html?cv=47843&af=329643&aff_platform=aaf&mall_affr=pr3&cpt=1544866481583&afref=https://www.kimovil.com/to/9SMTZ9&sk=VnYZvQVf&aff_trace_k'),
+(24, 18, 1, 163, 'Amazon', 'https://www.amazon.es/Xiaomi-Mi-A2-Lite-32GB/dp/B07HF5VM64/ref=olp_product_details?_encoding=UTF8&me='),
+(25, 4, 1, 239, 'Amazon', 'https://www.amazon.es/Xiaomi-MI-A2-Smartphone-Snapdragon/dp/B07GDSFZ25/ref=olp_product_details?_encoding=UTF8&me='),
+(26, 4, 1, 239, 'Amazon', 'https://www.amazon.es/Xiaomi-MI-A2-Smartphone-Snapdragon/dp/B07GDSFZ25/ref=olp_product_details?_encoding=UTF8&me='),
+(27, 21, 1, 367, 'Amazon', 'https://www.amazon.es/Xiaomi-5-99-Doble-3400mAh-Blanco/dp/B07D4NBDM9/ref=sr_1_1?s=music&ie=UTF8&qid=1544867222&sr=8-1&keywords=Xiaomi+Mi+Mix+2s'),
+(28, 22, 1, 629, 'PowerPlanet', 'https://www.powerplanetonline.com/mi_mix_3'),
+(29, 23, 1, 250, 'Amazon', 'https://www.amazon.es/Xiaomi-Mi-MAX-Smartphone-Memoria/dp/B07GVRS5FV/ref=olp_product_details?_encoding=UTF8&me='),
+(30, 24, 1, 339, 'Amazon', 'https://www.mediamarkt.es/es/product/_móvil-apple-iphone-xr-64-gb-liquid-retina-hd-6-1-a12-bionic-12-mp-f-1-8-hdr-4k-ip67-rojo-1433011.html?gclid=CjwKCAiAo8jgBRAVEiwAJUXKqMeIaEZWPiqupc7Q6HNB_Fu6aCJGfC66p2W7vkg_lU7WkZQyVkCErBoCwPoQAvD_BwE&gclsrc=aw.ds');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prestaciones`
+-- Estructura de tabla para la tabla `prestaciones`
 --
 
 DROP TABLE IF EXISTS `prestaciones`;
@@ -193,10 +222,10 @@ CREATE TABLE IF NOT EXISTS `prestaciones` (
   `bateria` int(32) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_movil` (`id_movil`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `prestaciones`
+-- Volcado de datos para la tabla `prestaciones`
 --
 
 INSERT INTO `prestaciones` (`id`, `id_movil`, `pantalla`, `procesador`, `velocidad`, `ram`, `memoria`, `camara`, `peso`, `version`, `bateria`) VALUES
@@ -208,12 +237,27 @@ INSERT INTO `prestaciones` (`id`, `id_movil`, `pantalla`, `procesador`, `velocid
 (6, 6, '5.84\"', 'Octa-core', '2.3GHz', '4 Gb', 64, '16+24 Mpx', 154, 'Android 8.0', 3400),
 (7, 7, '5.6\"', 'Octa-core', '1.6GHz', '3 Gb', 32, '13 Mpx', 154, 'Android 8.0', 3400),
 (8, 8, '5.5\"', 'Quad-core', '2Ghz', '4 Gb', 32, '12 Mpx', 150, 'Android 7.7', 3400),
-(9, 9, '5.9\"', 'Quad-core', '2Ghz', '4 Gb', 64, '13 Mpx', 150, 'Android 8.0', 3400);
+(9, 9, '5.9\"', 'Quad-core', '2Ghz', '4 Gb', 64, '13 Mpx', 150, 'Android 8.0', 3400),
+(10, 10, '6.18', 'Octa-core', '2.8GHz', '4 Gb', 64, '12 Mpx', 182, 'Android 8.0', 4000),
+(11, 11, '6.21', 'Octa-core', '2.8GHz', '6 Gb', 128, '12 Mpx', 175, 'Android 8.0', 3400),
+(12, 12, '6.41', 'Octa-core', '2.8GHz', '6 Gb', 128, '16 Mpx', 185, 'Android 8.0', 3700),
+(13, 13, '6.5', 'Octa-core', '2.2 GHz', '4 Gb', 64, '20 Mpx', 175, 'Android 7.1.1', 3700),
+(14, 14, '6.26', 'Octa-core', '1.8GHz', '3 Gb', 32, '12 Mpx', 176, 'Android 7.7', 4000),
+(15, 15, '5.84', 'Octa-core', '2.8GHz', '6 Gb', 64, '16 Mpx', 153, 'Android 8.0', 3400),
+(16, 16, '6.26', 'Octa-core', '2.8GHz', '4 Gb', 64, '12 Mpx', 169, 'Android 8.0', 3300),
+(17, 17, '5.99', 'Octa-core', '1.8GHz', '3 Gb', 32, '12 Mpx', 180, 'Android 8.0', 4000),
+(18, 18, '5.84', 'Octa-core', '2Ghz', '3 Gb', 32, '12 Mpx', 178, 'Android 8.0', 4000),
+(19, 4, '5.99', 'Octa-core', '2.2 GHz', '4 Gb', 64, '12 Mpx', 166, 'Android 9', 3010),
+(20, 4, '5.99', 'Octa-core', '2.2 GHz', '4 Gb', 64, '12 Mpx', 166, 'Android 9', 3010),
+(21, 21, '5.99', 'Octa-core', '2.8GHz', '6 Gb', 64, '12 Mpx', 194, 'Android 8.0', 3400),
+(22, 22, '6.39', 'Octa-core', '2.8GHz', '6 Gb', 128, '12 Mpx', 218, 'Android 9', 3200),
+(23, 23, '6.9', 'Octa-core', '1.8GHz', '4 Gb', 64, '12 Mpx', 221, 'Android 8.0', 5500),
+(24, 24, '5.8', 'Apple A11', '2.2GHz', '6 Gb', 128, '16 Mpx', 175, 'iOS 12', 3010);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `puntuacion_reseña`
+-- Estructura de tabla para la tabla `puntuacion_reseña`
 --
 
 DROP TABLE IF EXISTS `puntuacion_reseña`;
@@ -228,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `puntuacion_reseña` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reseña`
+-- Estructura de tabla para la tabla `reseña`
 --
 
 DROP TABLE IF EXISTS `reseña`;
@@ -241,10 +285,10 @@ CREATE TABLE IF NOT EXISTS `reseña` (
   `diseño` int(32) NOT NULL,
   `pantalla` int(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `reseña`
+-- Volcado de datos para la tabla `reseña`
 --
 
 INSERT INTO `reseña` (`id`, `id_usuario`, `id_movil`, `rendimiento`, `bateria`, `diseño`, `pantalla`) VALUES
@@ -272,12 +316,27 @@ INSERT INTO `reseña` (`id`, `id_usuario`, `id_movil`, `rendimiento`, `bateria`,
 (24, 2, 3, 2, 3, 4, 2),
 (31, 2, 1, 5, 5, 5, 5),
 (32, 2, 1, 5, 5, 5, 5),
-(33, 2, 1, 5, 5, 5, 5);
+(33, 2, 1, 5, 5, 5, 5),
+(34, 1, 10, 1, 1, 1, 1),
+(38, 1, 11, 5, 3, 5, 2),
+(36, 1, 12, 1, 1, 1, 1),
+(37, 1, 13, 1, 1, 1, 1),
+(39, 1, 14, 1, 1, 1, 1),
+(40, 1, 15, 1, 1, 1, 1),
+(41, 1, 16, 1, 1, 1, 1),
+(42, 1, 17, 1, 1, 1, 1),
+(43, 1, 18, 1, 1, 1, 1),
+(44, 1, 4, 1, 1, 1, 1),
+(45, 1, 4, 1, 1, 1, 1),
+(46, 1, 21, 1, 1, 1, 1),
+(47, 1, 22, 1, 1, 1, 1),
+(48, 1, 23, 1, 1, 1, 1),
+(49, 1, 24, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reseña_tienda`
+-- Estructura de tabla para la tabla `reseña_tienda`
 --
 
 DROP TABLE IF EXISTS `reseña_tienda`;
@@ -292,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `reseña_tienda` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tienda`
+-- Estructura de tabla para la tabla `tienda`
 --
 
 DROP TABLE IF EXISTS `tienda`;
@@ -307,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `tienda` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `tienda`
+-- Volcado de datos para la tabla `tienda`
 --
 
 INSERT INTO `tienda` (`id`, `nombre`, `esFisica`, `dominio`, `id_puntuacion`) VALUES
@@ -316,7 +375,7 @@ INSERT INTO `tienda` (`id`, `nombre`, `esFisica`, `dominio`, `id_puntuacion`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `usuario`
 --
 
 DROP TABLE IF EXISTS `usuario`;
@@ -332,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `correo`, `usuario`, `pass`, `codigo`, `estado`) VALUES

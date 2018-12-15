@@ -13,6 +13,9 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo base_url('css/admin.css')?>">
+	<script src="../js/jquery-1.7.1.min.js"></script>
+	<script src="../js/bootstrap-datetimepicker.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
 	<script type="text/javascript">
 	function CheckMarca(val){
  	var element=document.getElementById('color');
@@ -38,7 +41,7 @@
 <body>
 
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-	  <a class="navbar-brand" href="#"> Panel de Administración MovilUca</a>
+	  <a class="navbar-brand" href="<?= base_url().'admin'?>"> Panel de Administración MovilUca</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -50,13 +53,18 @@
 	   <ul class="navbar-nav mr-5"> 
 
 	        		<li class="nav-item active">
+	        <a class="nav-link" href="<?= base_url().'moviles/'?>"> <i class="fas fa-home fa-sm pr-2"></i>Inicio</a>
+	      </li>	<li class="nav-item active">
 			         <a class="nav-link" href="<?= base_url().'logout'?>">Logout<i class="fas fa-sign-out-alt fa-sm pl-2"></i></a>		         
 			      </li>
+
 	  </ul>
 	  </div>
 </nav>
 <div class="container-fluid pt-5" >
 		<div class="sidenav" style="padding-top: 100px;">
+			<div class="dropdown-divider"></div>
+			<a href="<?= base_url().'admin/add_not'?>">Añadir Noticia</a>
 			<div class="dropdown-divider"></div>
 
 		  <button class="dropdown-btn">Tablas 
@@ -67,6 +75,7 @@
 		    <a href="<?= base_url().'admin/moviles'?>">Moviles</a>
 
 		    <a href="<?= base_url().'admin/usuarios'?>">Usuarios</a>
+		    <a href="<?= base_url().'admin/noticias'?>">Noticias</a>
 		  </div>
 		  <div class="dropdown-divider"></div>
 		</div>
@@ -80,7 +89,7 @@
 	       <div class="form-group row">
 	       	<div class="col-3">
 		    <label for="exampleInputEmail1">Marca</label>
-		    <input name="marca" list="exampleList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca marca">
+		    <input name="marca" list="exampleList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca marca" required>
 			<datalist id="exampleList">
 			<?php foreach ($marca as $marca) {  ?>
 				<option value="<?= $marca->marca ?>">
@@ -90,17 +99,28 @@
 		  </div>
 		  <div class="col-3">
 		    <label for="exampleInputEmail1">Modelo</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca modelo" name="modelo">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca modelo" name="modelo" required>
 		  </div>
 		  <div class="col-3">
 		    <label for="exampleInputEmail1">Fecha de lanzamiento</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Formato YY-MM-DD" name="fecha_lanzamiento">
+		    <div class="input-append date form_datetime">
+    		<input type="text" class="form-control" placeholder="Introduzca fecha" name="fecha" readonly required>
+    		<span class="add-on"><i class="icon-th"></i></span>
+			</div>
+			<script type="text/javascript">
+    		$(".form_datetime").datetimepicker({
+        	format: "yyyy-mm-dd",
+        	minView: 2,
+        	autoclose: true,
+        	pickerPosition: "bottom-right"
+    		});
+			</script>   
 		  </div>
 		</div>
 		 <div class="form-group row">
 		 	<div class="col-6">
 		    <label for="exampleFormControlFile1">Foto</label>
-		    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="foto">
+		    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="foto" required>
 		  </div>
 		</div>
 		  
@@ -108,7 +128,7 @@
 		   <div class="form-group row ">
 		   	<div class="col-3">
 		    <label for="exampleInputEmail1">Pantalla</label>
-		    <input name="pantalla" list="pantallaList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca pantalla">
+		    <input name="pantalla" list="pantallaList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca pantalla" required>
 			<datalist id="pantallaList">
 			<?php foreach ($pantalla as $pantalla) {  ?>
 				<option value="<?= $pantalla->pantalla ?>">
@@ -117,7 +137,7 @@
 		  </div>
 		  <div class="col-3">
 		    <label for="exampleInputEmail1">Procesador</label>
-		    <input type="text" name="procesador" list="procesadorList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca procesador">
+		    <input type="text" name="procesador" list="procesadorList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca procesador" required>
 			<datalist id="procesadorList">
 			<?php foreach ($procesador as $procesador) {  ?>
 				<option value="<?= $procesador->procesador ?>">
@@ -126,7 +146,7 @@
 		  </div>
 		   <div class="col-3">
 		    <label for="exampleInputEmail1">Velocidad</label>
-		    <input type="text" name="velocidad" list="velocidadList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca velocidad">
+		    <input type="text" name="velocidad" list="velocidadList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca velocidad" required>
 			<datalist id="velocidadList">
 			<?php foreach ($velocidad as $velocidad) {  ?>
 				<option value="<?= $velocidad->velocidad ?>">
@@ -137,7 +157,7 @@
 		  <div class="form-group row">
 		  	<div class="col-3">
 		    <label for="exampleInputEmail1">Ram</label>
-		    <input type="text" name="ram" list="ramList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca ram">
+		    <input type="text" name="ram" list="ramList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca ram" required>
 			<datalist id="ramList">
 			<?php foreach ($ram as $ram) {  ?>
 				<option value="<?= $ram->ram ?>">
@@ -146,7 +166,7 @@
 		  </div>
 		  <div class="col-3">
 		    <label for="exampleInputEmail1">Memoria</label>
-		    <input type="text" name="memoria" list="memoriaList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca memoria">
+		    <input type="text" name="memoria" list="memoriaList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca memoria" required>
 			<datalist id="memoriaList">
 			<?php foreach ($memoria as $memoria) {  ?>
 				<option value="<?= $memoria->memoria ?>">
@@ -155,7 +175,7 @@
 		  </div>
 		  <div class="col-3">
 		    <label for="exampleInputEmail1">Camara</label>
-		    <input type="text" name="camara" list="camaraList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca camara">
+		    <input type="text" name="camara" list="camaraList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca camara" required>
 			<datalist id="camaraList">
 			<?php foreach ($camara as $camara) {  ?>
 				<option value="<?= $camara->camara ?>">
@@ -166,11 +186,11 @@
 		   <div class="form-group row">
 		   	<div class="col-3">
 		    <label for="exampleInputEmail1">Peso</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca Peso" name="peso">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introduzca Peso" name="peso" required>
 		  </div>
 		  <div class="col-3">
 		    <label for="exampleInputEmail1">Version</label>
-		    <input type="text" name="version" list="versionList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca version">
+		    <input type="text" name="version" list="versionList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca version" required>
 			<datalist id="versionList">
 			<?php foreach ($version as $version) {  ?>
 				<option value="<?= $version->version ?>">
@@ -179,7 +199,7 @@
 		  </div>
 		   <div class="col-3">
 		    <label for="exampleInputEmail1">Bateria</label>
-		    <input type="text" name="bateria" list="bateriaList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca bateria">
+		    <input type="text" name="bateria" list="bateriaList" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca bateria" required>
 			<datalist id="bateriaList">
 			<?php foreach ($bateria as $bateria) {  ?>
 				<option value="<?= $bateria->bateria ?>">

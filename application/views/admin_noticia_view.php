@@ -21,7 +21,7 @@
 </style>
 <body>
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 	  <a class="navbar-brand" href="<?= base_url().'admin'?>"> Panel de Administración MovilUca</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
@@ -34,9 +34,9 @@
 	   <ul class="navbar-nav mr-5"> 
 
 	        		<li class="nav-item active">
-				        <a class="nav-link" href="<?= base_url().'moviles/'?>"> <i class="fas fa-home fa-sm pr-2"></i>Inicio</a>
-				      </li>
-				      	<li class="nav-item active">
+	        <a class="nav-link" href="<?= base_url().'moviles/'?>"> <i class="fas fa-home fa-sm pr-2"></i>Inicio</a>
+	      </li>
+	      	<li class="nav-item active">
 			         <a class="nav-link" href="<?= base_url().'logout'?>">Logout<i class="fas fa-sign-out-alt fa-sm pl-2"></i></a>		         
 			      </li>
 	  </ul>
@@ -55,51 +55,37 @@
 
 		  <div class="dropdown-container">
 		    <a href="<?= base_url().'admin/moviles'?>">Moviles</a>
-
 		    <a href="<?= base_url().'admin/usuarios'?>">Usuarios</a>
-		    <a href="<?= base_url().'admin/noticias'?>">Noticias</a>
 		  </div>
 		  <div class="dropdown-divider"></div>
 		</div>
-	
+
+	 <div class="row col-sm-12">
+		<table class="table table-striped table-sm" style="margin-left: 200px; margin-top: 50px;">
+		  <thead>
+		    <tr>
+		      <th scope="col">Foto</th>
+		      <th scope="col">Descripción</th>
+		      <th scope="col">URL</th>
+		      <th scope="col">Eliminar</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<?php foreach($noticias as $noticia):?>
+		    <tr>
+		      <td><img src="<?php echo base_url('images/'.$noticia->foto.'')?>" class="img-fluid" alt="Responsive image"height="auto" width="60px" align="left"></td>
+		      <td><?= $noticia->descrip;?></td>
+		      <td><?= $noticia->url;?></td>
+		      <td><a href="<?= base_url().'admin/del_noticia/'.$noticia->id?>" 
+    				onclick="return confirm('¿Estas seguro?');"><i class="fas fa-trash-alt" style="color:red;"></i><a></td>
+		    </tr>
+		    <?php endforeach; ?>
+
+		  </tbody>
+		</table>
+	</div>
 </div>
 
-	<div class=" col-sm-12" style="padding-left: 250px;padding-top: 20px;padding-bottom: 20px;">
-		<h1> Modifica Usuario </h1>
-	 <form method="POST" name="form_iniciar" action="<?php echo
-			base_url().'admin/modifica_usuario/'.$usuario[0]->id?>">
-	       <div class="form-group row">
-	       	<div class="col-3">
-		    <label for="exampleInputEmail1">Nombre</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->nombre;?>" name="nombre">
-			</div>
-		 
-		  	<div class="col-3">
-		    <label for="exampleInputEmail">Correo</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->correo;?>" name="correo">
-			</div>
-			<div class="col-3">
-		    <label for="exampleInputEmail1">Nombre Usuario</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->usuario;?>" name="usuario">
-		</div>
-		  </div>
-		   <div class="form-group row">
-		   	<div class="col-3">
-		    <label for="exampleInputEmail1">Contraseña</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->pass;?>" name="pass">
-		  </div>
-		  <div class="col-3">
-		    <label for="exampleInputEmail1">Codigo</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->codigo;?>" name="codigo">
-		  </div>
-		   <div class="col-3">
-		    <label for="exampleInputEmail1">Estado</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->estado;?>" name="estado">
-		  </div>
-		</div>
-		  <button type="submit" class="btn btn-primary">Modificar</button>
-        </form>
-    </div>
 </body>
 <script >
 	var dropdown = document.getElementsByClassName("dropdown-btn");

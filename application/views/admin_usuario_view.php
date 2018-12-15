@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo base_url('css/admin.css')?>">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" crossorigin="anonymous">
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 </head>
 <style >
 	body{
@@ -22,7 +24,7 @@
 <body>
 
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-	  <a class="navbar-brand" href="#"> Panel de Administración MovilUca</a>
+	  <a class="navbar-brand" href="<?= base_url().'admin'?>"> Panel de Administración usuarioUca</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -34,6 +36,9 @@
 	   <ul class="navbar-nav mr-5"> 
 
 	        		<li class="nav-item active">
+				        <a class="nav-link" href="<?= base_url().'usuarioes/'?>"> <i class="fas fa-home fa-sm pr-2"></i>Inicio</a>
+				      </li>
+				      	<li class="nav-item active">
 			         <a class="nav-link" href="<?= base_url().'logout'?>">Logout<i class="fas fa-sign-out-alt fa-sm pl-2"></i></a>		         
 			      </li>
 	  </ul>
@@ -45,51 +50,52 @@
 			<div class="dropdown-divider"></div>
 			<a href="<?= base_url().'admin/add_mov'?>">Añadir Móvil</a>
 			<div class="dropdown-divider"></div>
+			<a href="<?= base_url().'admin/add_not'?>">Añadir Noticia</a>
+			<div class="dropdown-divider"></div>
 		  <button class="dropdown-btn">Tablas 
 		    <i class="fa fa-caret-down"></i>
 		  </button>
 
 		  <div class="dropdown-container">
 		    <a href="<?= base_url().'admin/moviles'?>">Moviles</a>
-
-		    <a href="<?= base_url().'admin/usuarios'?>">Usuarios</a>
+		    <a href="<?= base_url().'admin/noticias'?>">Noticias</a>
 		  </div>
 		  <div class="dropdown-divider"></div>
 		</div>
 	
 
-	 <div class="row col-sm-12">
-		<table class="table table-striped table-sm" style="margin-left: 200px; margin-top: 50px;">
-		  <thead>
-		    <tr>
-		      <th scope="col">Id</th>
-		      <th scope="col">Nombre</th>
-		      <th scope="col">Correo</th>
-		      <th scope="col">Usuario</th>
-		      <th scope="col">Contraseña</th>
-		      <th scope="col">Codigo</th>
-		      <th scope="col">Modificar</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  	<?php foreach($usuario as $usuario):?>
-		    <tr>
-		      <th scope="row"><?= $usuario->id;?></th>
-		      <td><?= $usuario->nombre;?></td>
-		      <td><?= $usuario->correo;?></td>
-		      <td><?= $usuario->usuario;?></td>
-		      <td><?= $usuario->pass;?></td>
-		      <td><?= $usuario->codigo;?></td>
-		       <td><a href="<?= base_url().'admin/del_usuario/'.$usuario->id?>" 
-    				onclick="return confirm('¿Estas seguro?');">
-		       <i class="fas fa-trash-alt" style="color:red;"></i> </a> /<a href="<?= base_url().'admin/mod_usuario/'.$usuario->id?>"><i class="fas fa-edit" 
+<br>
+<br>
+<div class="row col-sm-12" style="padding-left: 300px; width: 50%">
+	
+		<table id="dt-usuarioes" class="table table-striped table-sm" style="margin-left: 100px; margin-top: 15px;">
+										<thead>
+											<tr>
+												<th scope="col">Id</th>
+											      <th scope="col">Nombre</th>
+											      <th scope="col">Correo</th>
+											      <th scope="col">Usuario</th>
+											      <th scope="col">Contraseña</th>
+											      <th scope="col">Código</th>
+											      <th scope="col">Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+						<?php foreach ($usuario as $usuario) { ?>
+											<tr>
+												<td style="vertical-align: middle"><?= $usuario->id ?></td>
+												<td style="vertical-align: middle"><?= $usuario->nombre ?></td>
+												<td style="vertical-align: middle"><?= $usuario->correo ?></td>
+												<td style="vertical-align: middle"><?= $usuario->usuario ?></td>
+												<td style="vertical-align: middle"><?= $usuario->pass ?></td>
+												<td style="vertical-align: middle"><?= $usuario->codigo ?></td>
+												 <td><a href="<?= base_url().'admin/del_usuario/'.$usuario->id?>" 
+    				onclick="return confirm('¿Estas seguro?');"><i class="fas fa-trash-alt" style="color:red;"></i><a> / <a href="<?= base_url().'admin/mod_usuario/'.$usuario->id?>"><i class="fas fa-edit" 
 		      	style="color:green;"></i></a></td>
-		    </tr>
-		    <?php endforeach; ?>
-
-		  </tbody>
+											</tr>
+						<?php } ?>
+										</tbody>
 		</table>
-	</div>
 </div>
 
 </body>
@@ -108,6 +114,42 @@
 	    }
 	  });
 	}
+</script>
+</html>
+
+
+<script>
+	/* inicializar datatable */
+$(document).ready(function() {
+        $('#dt-usuarioes').DataTable({
+            responsive: true,
+            language: 
+					{
+						"sProcessing":     "Procesando...",
+						"sLengthMenu":     "Mostrar _MENU_ registros",
+						"sZeroRecords":    "No se encontraron resultados",
+						"sEmptyTable":     "Ningún dato disponible en esta tabla",
+						"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+						"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+						"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+						"sInfoPostFix":    "",
+						"sSearch":         "Buscar:",
+						"sUrl":            "",
+						"sInfoThousands":  ",",
+						"sLoadingRecords": "Cargando...",
+						"oPaginate": {
+							"sFirst":    "Primero",
+							"sLast":     "Último",
+							"sNext":     "Siguiente",
+							"sPrevious": "Anterior"
+						},
+						"oAria": {
+							"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+							"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+						}
+					}
+        });
+    });	
 </script>
 
 </html>

@@ -47,8 +47,6 @@
 			<div class="dropdown-divider"></div>
 			<a href="<?= base_url().'admin/add_mov'?>">Añadir Móvil</a>
 			<div class="dropdown-divider"></div>
-			<a href="<?= base_url().'admin/add_not'?>">Añadir Noticia</a>
-			<div class="dropdown-divider"></div>
 		  <button class="dropdown-btn">Tablas 
 		    <i class="fa fa-caret-down"></i>
 		  </button>
@@ -65,39 +63,24 @@
 </div>
 
 	<div class=" col-sm-12" style="padding-left: 250px;padding-top: 20px;padding-bottom: 20px;">
-		<h1> Modifica Usuario </h1>
+		<h1> Añadir Noticia </h1>
 	 <form method="POST" name="form_iniciar" action="<?php echo
-			base_url().'admin/modifica_usuario/'.$usuario[0]->id?>">
-	       <div class="form-group row">
-	       	<div class="col-3">
-		    <label for="exampleInputEmail1">Nombre</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->nombre;?>" name="nombre">
-			</div>
-		 
+			base_url().'admin/add_noticia/'?>">
+		   <div class="form-group row">
+		 	<div class="col-3">
+		    <label for="exampleFormControlFile1">Foto</label>
+		    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="foto" required>
+		  </div>
 		  	<div class="col-3">
-		    <label for="exampleInputEmail">Correo</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->correo;?>" name="correo">
+		    <label for="exampleInputEmail">Descripcion</label>
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  name="descripcion">
 			</div>
 			<div class="col-3">
-		    <label for="exampleInputEmail1">Nombre Usuario</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->usuario;?>" name="usuario">
+		    <label for="exampleInputEmail1">URL</label>
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  name="url">
 		</div>
-		  </div>
-		   <div class="form-group row">
-		   	<div class="col-3">
-		    <label for="exampleInputEmail1">Contraseña</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->pass;?>" name="pass">
-		  </div>
-		  <div class="col-3">
-		    <label for="exampleInputEmail1">Codigo</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->codigo;?>" name="codigo">
-		  </div>
-		   <div class="col-3">
-		    <label for="exampleInputEmail1">Estado</label>
-		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?= $usuario[0]->estado;?>" name="estado">
-		  </div>
-		</div>
-		  <button type="submit" class="btn btn-primary">Modificar</button>
+	</div>
+		  <button type="submit" class="btn btn-success">Añadir</button>
         </form>
     </div>
 </body>

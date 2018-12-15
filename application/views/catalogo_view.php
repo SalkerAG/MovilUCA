@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title><?= $titulo_web ?></title>
+<title>Catálogo</title>
  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -42,10 +42,14 @@
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				         <i class="far fa-user-circle fa-lg" style="padding-right: 10px;"></i><?=$_SESSION["usuario"]?>
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 				          <a class="dropdown-item" href="<?= base_url().'logout'?>">Logout</a>
 				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
+				          <?php if ($_SESSION["usuario"] == "admin") {?>
+				          	 <a class="dropdown-item" href="<?= base_url().'admin'?>">Panel de<br> Administración</a>
+				          	<?php }else{ ?>
+				          		<a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
+				          	<?php } ?>
 				        </div>
 				      </li>
 		        	
@@ -68,7 +72,7 @@
 	<div class="row" style="padding-top: 30px;">
 	
 	  <div class="col-sm-2 col-sm-offset-1" style="padding-top: 20px;">
-	  	<?= form_open(base_url().'catalogo/index',
+	  	<?= form_open(base_url().'catalogo/busqueda',
 				array('name'=>'form_reg'));?>
 	  	<div class="tam" data-toggle="collapse" href="#marcas" role="button" aria-expanded="false" aria-controls="collapseExample">
 	  		
@@ -76,9 +80,12 @@
  		</div>
 
 		<div class="collapse" id="marcas">	  
-			  <?php foreach($marca as $m):?>
+			  <?php foreach($marca as $marc => $m):?>
 				<div class="form-check" >
-			  	<input class="form-check-input" type="checkbox" name="marca[]" value="<?= $m->marca;?>" id="">
+			  	<input class="form-check-input" type="checkbox" name="marca[]" value="<?= $m->marca;?>" id="" 
+			  	<?php
+			  		if(isset($_SESSION['marca']))
+			  			 if (in_array($m->marca, $_SESSION['marca'])) echo 'checked'; ?> >
 			 	 <label class="form-check-label" for="<?= $m->marca;?>">
 			    <?= $m->marca;?>
 			  	</label>
@@ -90,11 +97,15 @@
 			Procesador
  		</div>
 		<div class="collapse" id="procesador">
-			  <?php foreach($procesador as $p):?>
+			  <?php foreach($procesador as $pro => $p):?>
 				<div class="form-check" >
-			  	<input class="form-check-input" type="checkbox" name="procesador[]" value="<?= $p->procesador;?>" id="">
+			  	<input class="form-check-input" type="checkbox" name="procesador[]" value="<?= $p->procesador ?>" id="" 
+			  	<?php 
+			  		if(isset($_SESSION['procesador']))
+			  			 if (in_array($p->procesador, $_SESSION['procesador'])) echo 'checked'; ?> >
+			 	 <label class="form-check-label" for="<?= $m->marca;?>">
 			 	 <label class="form-check-label" for="<?= $p->procesador;?>">
-			    <?= $p->procesador;?>
+			 	 	<?= $p->procesador;?>
 			  	</label>
 				</div>
 			  <?php endforeach; ?><br>
@@ -105,11 +116,14 @@
  			
 		
 		<div class="collapse" id="ram">
-			  <?php foreach($ram as $r):?>
+			  <?php foreach($ram as $ra => $r):?>
 				<div class="form-check" >
-			  	<input class="form-check-input" type="checkbox" name="ram[]" value="<?= $r->ram;?>" id="">
+			  	<input class="form-check-input" type="checkbox" name="ram[]" value="<?= $r->ram ?>" id=""
+			  	<?php
+			  		if(isset($_SESSION['ram']))
+			  			 if (in_array($r->ram, $_SESSION['ram'])) echo 'checked'; ?> >
 			 	 <label class="form-check-label" for="<?= $r->ram;?>">
-			    <?= $r->ram;?>
+			    <?= $r->ram?>
 			  	</label>
 				</div>
 			  <?php endforeach; ?><br>
@@ -118,9 +132,12 @@
 			Memoria
  		</div>
 		<div class="collapse" id="memoria">
-			  <?php foreach($memoria as $m):?>
+			  <?php foreach($memoria as $mem => $m):?>
 				<div class="form-check" >
-			  	<input class="form-check-input" type="checkbox" name="memoria[]" value="<?= $m->memoria;?>" id="">
+			  	<input class="form-check-input" type="checkbox" name="memoria[]" value="<?= $m->memoria;?>" id=""
+			  	<?php
+			  		if(isset($_SESSION['memoria']))
+			  			 if (in_array($m->memoria, $_SESSION['memoria'])) echo 'checked'; ?> >
 			 	 <label class="form-check-label" for="<?= $m->memoria;?>">
 			    <?= $m->memoria;?>
 			  	</label>
@@ -128,55 +145,48 @@
 			  <?php endforeach; ?><br>
 			  
 			</div>
-			<button type="submit" value="Registrar" class="tam1" name="submit_m">Filtrar</button>
+			<button type="submit" value="submit" class="tam1" name="submit">Filtrar</button>
 		<?= form_close(); ?>
 		</div>
 
-	 <div class="row col-sm-10">
-		<?php 
-		 	$nb_elem_per_page = 5;
-			$page = isset($_GET['page'])?intval($_GET['page']-1):0;
-			$data = $moviles;
-			if(is_int((count($data)/$nb_elem_per_page))){
-				$number_of_pages = intval(count($data)/$nb_elem_per_page);
-			} else {
-				$number_of_pages = intval(count($data)/$nb_elem_per_page)+1;
-			}
-		?>
+	<div class="row col-sm-8">
+		<?php if (isset($moviles)) {?>
+			<?php foreach($moviles as $movil => $m){;?>
 
-			<?php foreach(array_slice($moviles, $page*$nb_elem_per_page,$nb_elem_per_page) as $movil){?>
-				
 				<figure class="snip1249 rounded ">
-				<?php
-	 			if($movil->disponibilidad == 0){?>
-					<span class="tag rounded-right">No disponible</span>
-				<?php } ?>
-				  <div class="image" style="background-color:#F3F3F3;">
-				    <img src="<?php echo base_url('images/'.$movil->foto.'')?>" alt="sample85"/>
+					<?php
+		 			if($m->disponibilidad == 0){?>
+						<span class="tag rounded-right">No disponible</span>
+					<?php } ?>
+				  	<div class="image" style="background-color:#F3F3F3;">
+				    <img src="<?php echo base_url('images/'.$m->foto.'')?>" alt="sample85"/>
 					 </div>
 					 <figcaption>
-					    <div style="height: 120px;"><h4><?= $movil->marca;?> <?= $movil->modelo;?></h4></div>
+					    <div style="height: 120px;"><h4><?= $m->marca;?> <?= $m->modelo;?></h4></div>
 					    
 					    <div class="price">
-					      <?= $movil->precio; ?>€
+					      <?= $m->precio; ?>€
 
 					    </div>
 
-					    <div style="margin-top: -20px;"><a href="<?= base_url().'un_movil/mov/'.$movil->id?> " class="add-to-cart rounded">Ver móvil</a></div><br>
+					    <div style="margin-top: -20px;"><a href="<?= base_url().'un_movil/mov/'.$m->id?> " class="add-to-cart rounded">Ver móvil</a></div><br>
 					  </figcaption>
-					</figure>
-					<?php } ?>
-				</div>   
-			<?php if (count($data) > $nb_elem_per_page) { ?>   
-			<ul id='paginator'>
- 			<?php
-  				for($i=1;$i<=$number_of_pages;$i++){ ?>
-  					 <li><a href='?page=<?=$i?>'><?php echo $i ?></a></li>
-  				<?php } ?>
-			</ul>
-			<?php } ?>	
+				</figure>
 
-</div>
-	
+		<?php } ?>
+	</div>  
+		<?php 
+			} else { ?>
+
+			<h3>No hay coincidencias.</h3>
+			<?php } ?>
+			<div class="pagination" >
+			<?php if (isset($links)) {?>
+			    <?= $links; ?>
+			<?php } ?>
+			</div>			
+	</div>
 </body>
 </html>
+
+

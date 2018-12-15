@@ -49,10 +49,14 @@
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				         <i class="far fa-user-circle fa-lg" style="padding-right: 10px;"></i><?=$_SESSION["usuario"]?>
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 				          <a class="dropdown-item" href="<?= base_url().'logout'?>">Logout</a>
 				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
+				          <?php if ($_SESSION["usuario"] == "admin") {?>
+				          	 <a class="dropdown-item" href="<?= base_url().'admin'?>">Panel de<br> Administración</a>
+				          	<?php }else{ ?>
+				          		<a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
+				          	<?php } ?>
 				        </div>
 				      </li>
 		        	

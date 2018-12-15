@@ -45,7 +45,11 @@
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 				          <a class="dropdown-item" href="<?= base_url().'logout'?>">Logout</a>
 				          <div class="dropdown-divider"></div>
-				          <a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
+				          <?php if ($_SESSION["usuario"] == "admin") {?>
+				          	 <a class="dropdown-item" href="<?= base_url().'admin'?>">Panel de<br> Administración</a>
+				          	<?php }else{ ?>
+				          		<a class="dropdown-item" href="<?= base_url().'favoritos'?>">Favoritos</a>
+				          	<?php } ?>
 				        </div>
 				      </li>
 		        	
@@ -92,16 +96,11 @@
 	  </a>
 	</div>
 
-<div class="container-fluid pt-5" style="padding-top: 80px;padding-bottom: 100px;
+<div class="container-fluid pt-5" style="padding-top: 80px;padding-bottom: 10px;
 	background-color: white;">
 	<div class ="row" >
 		<div class="col-sm-5 ">
-			 <h2 style="padding-bottom: 20px;">Top Valorados</h2>	
-
-					<?php
-			 				if($valorados[0]->disponibilidad == 0){?>
-							<span class="tag rounded-right"><center><b>No disponible</b></center></span>
-						<?php } ?>
+			 <h2 style="padding-bottom: 20px;">Top Valorados</h2>
 					<img src="<?php echo base_url('images/'.$valorados[0]->foto.'')?>" class="img-responsive" alt="Responsive image"height="auto" width="300px" align="left">
 					
 					<h1><?= $valorados[0]->marca;?> <?= $valorados[0]->modelo;?></h1>
@@ -141,29 +140,19 @@
 
 </div>
 
-<div class="container-fluid pt-5" style="padding-top: 80px;padding-bottom: 100px;
+<div class="container-fluid pt-5" style="padding-top: 80px;padding-bottom: 10px;
 	background-color: #e9ecef;">
 	<div class ="row" >
 		<div class="col-sm-5 ">
 			 <h2 style="padding-bottom: 20px;">Novedades</h2>	
-
-					<?php
-			 				if($novedad[0]->disponibilidad == 0){?>
-							<span class="tag rounded-right"><center><b>No disponible</b></center></span>
-						<?php } ?>
 					<img src="<?php echo base_url('images/'.$novedad[0]->foto.'')?>" class="img-responsive" alt="Responsive image"height="auto" width="300px" align="left">
 					
 					<h1><?= $novedad[0]->marca;?> <?= $novedad[0]->modelo;?></h1>
 					<h2>Desde: 
 					<?= $preciov[0]->precio;?>€
 					</h2>
-					<div class="star-ratings">
-					  <div class="fill-ratings" style="width: <?= ($valorados[0]->total)*10;?>%;position: relative;">
-					    <span>★★★★★</span>
-					  </div>
-					  
-					</div>
-					 <h6 style="color:black; padding-left: 5px;"><?= bcdiv($valorados[0]->total, '1', 2);?>/5</h6>
+					<h3><?= $novedad[0]->fecha_lanzamiento;?></h3>
+					
 					  <div><a href="<?= base_url().'un_movil/mov/'.$novedad[0]->id?> " class="btn btn-dark">Ver móvil</a></div>
 		</div>
 		 <div class="col-sm-5" style="margin-top: 80px; margin-left: 50px;">

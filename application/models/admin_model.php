@@ -12,6 +12,74 @@ class admin_model extends CI_Model{
 	 return $consulta->result();
 	 }
 
+	 public function get_noticias(){
+ 	$consulta = $this->db->query('Select * from noticia group by noticia.id');
+	 return $consulta->result();
+	 }
+
+	public function get_n_moviles(){
+	 	$consulta = $this->db->query('Select count(id) as "count" from movil;');
+		return $consulta->result();
+	}
+	public function get_n_puntuacion(){
+	 	$consulta = $this->db->query('Select count(id) as "count" from reseña;');
+		return $consulta->result();
+	}
+	public function get_n_usuarios(){
+	 	$consulta = $this->db->query('Select count(id) as "count" from usuario;');
+		return $consulta->result();
+	}
+	public function get_n_opiniones(){
+	 	$consulta = $this->db->query('Select count(id) as "count" from comentario;');
+		return $consulta->result();
+	}
+	public function get_uno(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where rendimiento = 1;');
+		return $consulta->result();
+	}
+	public function get_dos(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where rendimiento = 2;');
+		return $consulta->result();
+	}
+	public function get_tres(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where rendimiento = 3;');
+		return $consulta->result();
+	}
+	public function get_cuatro(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where rendimiento = 4;');
+		return $consulta->result();
+	}
+	public function get_cinco(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where rendimiento = 5;');
+		return $consulta->result();
+	}
+	public function get_uno1(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where diseño = 1;');
+		return $consulta->result();
+	}
+	public function get_dos1(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where diseño = 2;');
+		return $consulta->result();
+	}
+	public function get_tres1(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where diseño = 3;');
+		return $consulta->result();
+	}
+	public function get_cuatro1(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where diseño = 4;');
+		return $consulta->result();
+	}
+	public function get_cinco1(){
+		$consulta = $this->db->query('Select count(id) as "count" from reseña where diseño = 5;');
+		return $consulta->result();
+	}
+
+	 public function del_noticia($id){
+	 	$this->db->delete('noticia', array(
+			'id' => $id
+			));
+	 }
+
 	 public function del_movil($id){
 	 	$this->db->delete('movil', array(
 			'id' => $id
@@ -46,13 +114,35 @@ class admin_model extends CI_Model{
 			'id_usuario' => $id
 			));
 	 }
+
+	 public function del_precio_movil($id){
+	 	$this->db->delete('precio', array(
+			'id' => $id
+			));
+	 }
+
+	 public function get_movil_precio($id){
+	 	$consulta = $this->db->query('Select movil.id from movil,precio where precio.id ='.$id.'
+	 		and movil.id = precio.id_movil;');
+	 	return $consulta->result();
+	 }
+	 public function add_precio_movil($id){
+	 	$this->db->insert('precio', array(
+		 //el true es para que limpie este campo de inyecciones xss
+		'id_movil'=>$id,
+		 'id_tienda'=>'1',
+		 'precio'=>$this->input->post('precio',TRUE),
+		 'tienda'=>$this->input->post('tienda',TRUE),
+		 'url'=>$this->input->post('url',TRUE)
+ 		));
+	 }
 	 public function add_movil(){
 	 	$this->db->insert('movil', array(
 		 //el true es para que limpie este campo de inyecciones xss
 		'marca'=>$this->input->post('marca',TRUE),
 		 'modelo'=>$this->input->post('modelo',TRUE),
 		 'foto'=>$this->input->post('foto',TRUE),
-		 'fecha_lanzamiento'=>$this->input->post('fecha_lanzamiento',TRUE),
+		 'fecha_lanzamiento'=>$this->input->post('fecha',TRUE),
 		 'disponibilidad'=>'0',
 		'num_reseñas'=>'0'
  		));
@@ -94,7 +184,7 @@ class admin_model extends CI_Model{
  	}
 
  	public function get_movil($id){
- 		$consulta = $this->db->query('Select * from movil,prestaciones where movil.id = '.$id.' and prestaciones.id_movil = '.$id.';');
+ 		$consulta = $this->db->query('Select movil.id, movil.marca, movil.modelo, movil.disponibilidad, movil.foto,prestaciones.procesador, prestaciones.ram, prestaciones.memoria, prestaciones.pantalla, prestaciones.velocidad, prestaciones.camara, prestaciones.peso, prestaciones.version, prestaciones.bateria, movil.fecha_lanzamiento from movil,prestaciones where movil.id = '.$id.' and prestaciones.id_movil = '.$id.';');
 		return $consulta->result();
  	}
  	public function get_precio($id){
@@ -117,38 +207,37 @@ class admin_model extends CI_Model{
 		$this->db->update('usuario');
  	}
  	public function modifica_movil($id){
- 		$this->db->set('marca',$this->input->post('marca',TRUE));
- 		$this->db->set('modelo', $this->input->post('modelo',TRUE));
- 		$this->db->set('fecha_lanzamiento',$this->input->post('fecha_lanzamiento',TRUE));
- 		$this->db->set('disponibilidad', $this->input->post('disponibilidad',TRUE));
- 		$this->db->set('foto', $this->input->post('foto',TRUE));
-		$this->db->where('id', $id);
-		$this->db->update('movil');
+ 		$this->db->where('id', $id);
+ 		$this->db->update('movil', array(
+ 			'marca'=>$this->input->post('marca',TRUE),
+		 	'modelo'=>$this->input->post('modelo',TRUE),
+		 	'fecha_lanzamiento'=>$this->input->post('fecha',TRUE)));
+ 		$this->db->where('id_movil', $id);
+ 		$this->db->update('prestaciones', array(
+		 	'pantalla'=>$this->input->post('pantalla',TRUE),
+			'procesador'=>$this->input->post('procesador',TRUE),
+			'velocidad'=>$this->input->post('velocidad',TRUE),
+			'ram'=>$this->input->post('ram',TRUE),
+			'memoria'=>$this->input->post('memoria',TRUE),
+			'camara'=>$this->input->post('camara',TRUE),
+			'peso'=>$this->input->post('peso',TRUE),
+			'version'=>$this->input->post('version',TRUE),
+			'bateria'=>$this->input->post('bateria',TRUE)));
 
-		$this->db->set('pantalla',$this->input->post('pantalla',TRUE));
- 		$this->db->set('procesador', $this->input->post('procesador',TRUE));
- 		$this->db->set('velocidad',$this->input->post('velocidad',TRUE));
- 		$this->db->set('ram', $this->input->post('ram',TRUE));
- 		$this->db->set('memoria', $this->input->post('memoria',TRUE));
- 		$this->db->set('camara', $this->input->post('camara',TRUE));
- 		$this->db->set('peso', $this->input->post('peso',TRUE));
- 		$this->db->set('version', $this->input->post('version',TRUE));
- 		$this->db->set('bateria', $this->input->post('bateria',TRUE));
-		$this->db->where('id_movil', $id);
-		$this->db->update('prestaciones');
  	}
 
  	public function modifica_precio_movil($id){
- 		$this->db->set('precio',$this->input->post('precio',TRUE));
- 		$this->db->set('tienda', $this->input->post('tienda',TRUE));
- 		$this->db->set('url',$this->input->post('url',TRUE));
-		$this->db->where('id', $id);
-		$this->db->update('precio');
+ 		$this->db->where('id_movil', $id);
+ 		$this->db->where('id_tienda', $_POST['id_tienda']);
+ 		$this->db->update('precio', array(
+ 			'precio' => $this->input->post('precio', TRUE),
+ 			'tienda' => $this->input->post('tienda', TRUE),
+ 			'url' => $this->input->post('url', TRUE)));
  	}
  	public function modifica_foto_movil($id){
- 		$this->db->set('foto',$this->input->post('foto',TRUE));
-		$this->db->where('id', $id);
-		$this->db->update('movil');
+ 		$this->db->where('id', $id);
+ 		$this->db->update('movil', array(
+ 			'foto' => $this->input->post('foto', TRUE)));
  	}
 
  	public function get_marcas(){
@@ -182,6 +271,14 @@ class admin_model extends CI_Model{
  	public function get_tiendas(){
 		return $consultamarca = $this->db->query("SELECT distinct(tienda) from precio")->result();
  	}
+
+ 	 public function add_noticia(){
+	 	$this->db->insert('noticia', array(
+		 //el true es para que limpie este campo de inyecciones xss
+		 'foto'=>$this->input->post('foto',TRUE),
+		 'descrip'=>$this->input->post('descripcion',TRUE),
+		 'url'=>$this->input->post('url',TRUE)
+ 		));
+	 }
 }
 ?>
-
